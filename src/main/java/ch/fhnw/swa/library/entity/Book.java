@@ -3,20 +3,20 @@ package ch.fhnw.swa.library.entity;
 import org.springframework.data.annotation.Id;
 
 public class Book {
-	
+
 	@Id
 	private String id;
-	
+
 	private final String title;
 	private final String author;
 	private final String isbn;
-	
+
 	public Book(String title, String author, String isbn) {
 		this.title = title;
 		this.author = author;
 		this.isbn = isbn;
 	}
-	
+
 	public String toString() {
 		return String.format("Book[id=%d, title='%s', author='%s']", id, title, author);
 	}
@@ -36,5 +36,5 @@ public class Book {
 	public String getIsbn() {
 		return isbn;
 	}
-	
+
 }
