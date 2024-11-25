@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import ch.fhnw.swa.library.entity.Book;
+import ch.fhnw.swa.library.entity.Image;
 import ch.fhnw.swa.library.repository.BookRepository;
 
 @Service
@@ -38,6 +39,13 @@ public class BookService {
 
 	public Book createBook(Book book) {
 		return bookRepository.save(book);
+	}
+
+	public Book addBookImage(String bookId, Image image) {
+		Book book = bookRepository.findById(bookId).get();
+		book.addImage(image);
+		book = bookRepository.save(book);
+		return book;
 	}
 
 //	will probably never be used
