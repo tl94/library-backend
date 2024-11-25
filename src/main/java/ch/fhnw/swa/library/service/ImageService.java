@@ -21,11 +21,11 @@ public class ImageService {
 		this.imageRepository = imageRepository;
 	}
 
-	public ObjectId addImage(MultipartFile file) throws IOException {
+	public Image addImage(MultipartFile file) throws IOException {
 		Image image = new Image();
 		image.setImage(new Binary(BsonBinarySubType.BINARY, file.getBytes()));
 		image = imageRepository.save(image);
-		return image.getId();
+		return image;
 	}
 	
 	public Image getImage(ObjectId id) {
