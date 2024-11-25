@@ -1,5 +1,6 @@
 package ch.fhnw.swa.library.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,15 +34,6 @@ public class BookController {
 		return bookService.findBookById(id);
 	}
 
-	/*
-	 * @GetMapping("/create") public List<Book> createBooks() { List<Book> books =
-	 * new ArrayList<>(); books.add(bookService.createBook("L'Étranger",
-	 * "Albert Camus", "978-3-15-009169-2"));
-	 * books.add(bookService.createBook("Picknick am Wegesrand", "Strugatzki",
-	 * "978-3-518-37170-1")); books.add(bookService.createBook("Neuromancer",
-	 * "William Gibson", "978-0-441-56959-5")); return books; }
-	 */
-
 	@PostMapping()
 	public Book createBook(@RequestBody Book book) {
 		return bookService.createBook(book);
@@ -52,5 +44,4 @@ public class BookController {
 		Book book = bookService.deleteBook(id);
 		return book;
 	}
-
 }
