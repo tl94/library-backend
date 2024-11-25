@@ -18,7 +18,7 @@ public class Book {
 	}
 
 	public String toString() {
-		return String.format("Book[id=%d, title='%s', author='%s']", id, title, author);
+		return String.format("Book[id=%s, title='%s', author='%s']", id, title, author);
 	}
 
 	public String getId() {
