@@ -1,6 +1,9 @@
 package ch.fhnw.swa.library.entity;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 public class Book {
 
@@ -10,6 +13,9 @@ public class Book {
 	private final String title;
 	private final String author;
 	private final String isbn;
+	
+	@DBRef
+	private List<Image> images;
 
 	public Book(String title, String author, String isbn) {
 		this.title = title;
