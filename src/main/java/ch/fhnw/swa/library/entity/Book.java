@@ -42,5 +42,9 @@ public class Book {
 	public String getIsbn() {
 		return isbn;
 	}
+	
+	public void addImage(Image image) {
+		images.add(image);
+	}
 
 }
