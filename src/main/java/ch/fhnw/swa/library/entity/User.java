@@ -1,11 +1,18 @@
 package ch.fhnw.swa.library.entity;
 
+import java.util.Collection;
 import java.util.Set;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.security.core.CredentialsContainer;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-public class User {
+public class User implements UserDetails, CredentialsContainer {
+
+	private static final long serialVersionUID = -7972231862009567627L;
+
 	@Id
 	private ObjectId id;
 
@@ -55,6 +62,17 @@ public class User {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	@Override
+	public void eraseCredentials() {
+		this.password = null;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
