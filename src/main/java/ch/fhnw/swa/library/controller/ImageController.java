@@ -30,7 +30,7 @@ public class ImageController{
 	}
 	
 	@PostMapping
-	public ObjectId addImage(@RequestParam("image") MultipartFile image, String bookId) throws IOException {
+	public ObjectId addImage(@RequestParam MultipartFile image, String bookId) throws IOException {
 		Image newImage = imageService.addImage(image);
 		Book book = bookService.addBookImage(bookId, newImage);
 		return newImage.getId();
