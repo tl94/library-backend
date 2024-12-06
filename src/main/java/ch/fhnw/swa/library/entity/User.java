@@ -58,6 +58,14 @@ public class User implements UserDetails, CredentialsContainer {
 		return roles.remove(role);
 	}
 	
+	public Set<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<String> roles) {
+		this.roles = roles;
+	}
+
 	public boolean isActive() {
 		return active;
 	}
