@@ -2,11 +2,13 @@ package ch.fhnw.swa.library.entity;
 
 import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class User implements UserDetails, CredentialsContainer {
@@ -20,7 +22,7 @@ public class User implements UserDetails, CredentialsContainer {
 
 	private String password;
 
-	private Set<UserRole> roles;
+	private Set<String> roles;
 
 	private boolean active;
 
@@ -47,15 +49,15 @@ public class User implements UserDetails, CredentialsContainer {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public Set<UserRole> getRoles() {
-		return roles;
+	
+	public void addRole(String role) {
+		roles.add(role);
 	}
 
-	public void setRoles(Set<UserRole> roles) {
-		this.roles = roles;
+	public boolean removeRole(String role) {
+		return roles.remove(role);
 	}
-
+	
 	public boolean isActive() {
 		return active;
 	}
@@ -71,9 +73,7 @@ public class User implements UserDetails, CredentialsContainer {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
+		return roles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role)).collect(Collectors.toList());
 	}
-	
-	
+
 }
