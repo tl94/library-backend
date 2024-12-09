@@ -1,0 +1,21 @@
+
+spring:
+  application:
+    name: library
+  threads:
+    virtual:
+      enabled: true
+  data:
+   mongodb:
+      host: 'localhost'
+      port: 27017
+      database: 'library'
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: localhost:8080/library/api/auth
+server:
+  servlet:
+    context-path: '/library/api'
+   
