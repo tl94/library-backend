@@ -4,9 +4,9 @@ import java.util.Optional;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Repository;
 
+import ch.fhnw.swa.library.entity.User;
 
 
 @Repository
