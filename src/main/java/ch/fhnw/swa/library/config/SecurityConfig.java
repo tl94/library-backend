@@ -23,7 +23,7 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(
 				(authorize) -> authorize
-				.requestMatchers("/login").permitAll()
+				.requestMatchers("/auth/**").permitAll()
 				.requestMatchers("/books").permitAll()
 				.requestMatchers("/users").permitAll()
 				.requestMatchers(HttpMethod.POST, "/images").hasRole("ADMIN")
