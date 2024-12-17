@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ch.fhnw.swa.library.entity.User;
+import ch.fhnw.swa.library.entity.UserDTO;
 
 @RestController
 @RequestMapping("/auth")
@@ -25,7 +26,7 @@ public class LoginController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+	public ResponseEntity<String> login(@RequestBody UserDTO loginRequest) {
 		try {
 			Authentication authentication = this.authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password()));
@@ -35,9 +36,4 @@ public class LoginController {
 		}
 
 	}
-
-	public record LoginRequest(String username, String password) {
-
-	}
-
 }
