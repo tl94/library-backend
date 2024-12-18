@@ -1,6 +1,5 @@
 package ch.fhnw.swa.library.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;

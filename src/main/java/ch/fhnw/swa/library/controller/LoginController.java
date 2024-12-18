@@ -18,7 +18,6 @@ import ch.fhnw.swa.library.entity.User;
 import ch.fhnw.swa.library.entity.UserDTO;
 import ch.fhnw.swa.library.repository.UserRepository;
 import ch.fhnw.swa.library.service.JwtService;
-import ch.fhnw.swa.library.service.UserService;
 
 @RestController
 @RequestMapping("/auth")
