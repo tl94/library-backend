@@ -1,6 +1,7 @@
 package ch.fhnw.swa.library.service;
 
 import java.time.Instant;
+import java.util.List;
 
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
@@ -19,13 +20,14 @@ public class JwtService {
 	}
 
 	// generate JWT
-	public String generateToken(String username) {
+	public String generateToken(String username, List<String> roles) {
 		Instant now = Instant.now();
 		
 		JwsHeader header = JwsHeader.with(MacAlgorithm.HS256).build();
 		
 		JwtClaimsSet claims = JwtClaimsSet.builder()
 				.subject(username)
+				.claim("roles", roles)
 				.issuedAt(now)
 				.expiresAt(now.plusSeconds(3600 * 24 * 7))
 				.build();
