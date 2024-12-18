@@ -10,6 +10,8 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
+import ch.fhnw.swa.library.entity.User;
+
 @Service
 public class JwtService {
 
@@ -20,13 +22,19 @@ public class JwtService {
 	}
 
 	// generate JWT
-	public String generateToken(String username, List<String> roles) {
+	public String generateToken(User user) {
 		Instant now = Instant.now();
 		
 		JwsHeader header = JwsHeader.with(MacAlgorithm.HS256).build();
 		
+		String id = user.getId().toString();
+		String username = user.getUsername();
+		List<String> roles = user.getRoles();
+		
 		JwtClaimsSet claims = JwtClaimsSet.builder()
 				.subject(username)
+				.claim("id", id)
+				.claim("username", username)
 				.claim("roles", roles)
 				.issuedAt(now)
 				.expiresAt(now.plusSeconds(3600 * 24 * 7))

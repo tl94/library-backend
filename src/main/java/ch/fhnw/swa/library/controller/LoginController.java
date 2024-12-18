@@ -40,9 +40,8 @@ public class LoginController {
 					new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password()));
 			
 			User user = userRepository.findByUsername(loginRequest.username());
-			List<String> roles = user.getRoles();
 			
-			String jwt = jwtService.generateToken(loginRequest.username(), roles);
+			String jwt = jwtService.generateToken(user);
 			
 			return ResponseEntity.ok(new JwtResponse(jwt));
 		} catch (AuthenticationException e) {
