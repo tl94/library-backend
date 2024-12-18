@@ -30,12 +30,14 @@ public class JwtService {
 		String id = user.getId().toString();
 		String username = user.getUsername();
 		List<String> roles = user.getRoles();
+		boolean isNonLocked = user.isAccountNonLocked();
 		
 		JwtClaimsSet claims = JwtClaimsSet.builder()
 				.subject(username)
 				.claim("id", id)
 				.claim("username", username)
 				.claim("roles", roles)
+				.claim("isNonLocked", isNonLocked)
 				.issuedAt(now)
 				.expiresAt(now.plusSeconds(3600 * 24 * 7))
 				.build();
