@@ -3,7 +3,6 @@ package ch.fhnw.swa.library.entity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
@@ -41,7 +40,7 @@ public class User implements UserDetails, CredentialsContainer {
 		this.username = username;
 		this.password = password;
 		this.roles = new ArrayList<String>();
-		roles.add("USER");
+		roles.add("ROLE_USER");
 		this.isAccountNonLocked = true;
 		this.isAccountNonExpired = true;
 		this.isCredentialsNonExpired = true;
@@ -55,7 +54,7 @@ public class User implements UserDetails, CredentialsContainer {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return roles.stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role)).collect(Collectors.toList());
+		return roles.stream().map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
 	}
 	
 	public boolean addRole(String role) {
