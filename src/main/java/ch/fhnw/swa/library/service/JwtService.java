@@ -33,7 +33,7 @@ public class JwtService {
 		boolean isNonLocked = user.isAccountNonLocked();
 		
 		JwtClaimsSet claims = JwtClaimsSet.builder()
-				.subject(username)
+				.subject(id)
 				.claim("id", id)
 				.claim("username", username)
 				.claim("roles", roles)
