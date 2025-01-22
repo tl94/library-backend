@@ -18,4 +18,13 @@ spring:
 server:
   servlet:
     context-path: '/library/api'
+    
+logging:
+  level:
+    org:
+      springframework:
+        security:
+          DEBUG
    
+jwt:
+  secret: your-very-long-secure-key-that-is-at-least-32-characters
