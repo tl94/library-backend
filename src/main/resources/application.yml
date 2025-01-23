@@ -28,3 +28,6 @@ logging:
    
 jwt:
   secret: your-very-long-secure-key-that-is-at-least-32-characters
+  expiration: 
+    access-token: 3600000
+    refresh-token: 604800000
