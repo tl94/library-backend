@@ -10,19 +10,22 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
+import ch.fhnw.swa.library.config.JwtConfig;
 import ch.fhnw.swa.library.entity.User;
 
 @Service
 public class JwtService {
 
+	private final JwtConfig jwtConfig;
 	private final JwtEncoder jwtEncoder;
 
-	public JwtService(JwtEncoder jwtEncoder) {
+	public JwtService(JwtConfig jwtConfig, JwtEncoder jwtEncoder) {
+		this.jwtConfig = jwtConfig;
 		this.jwtEncoder = jwtEncoder;
 	}
 
-	// generate JWT
-	public String generateToken(User user) {
+	// generate Access Token
+	public String generateAccessToken(User user) {
 		Instant now = Instant.now();
 		
 		JwsHeader header = JwsHeader.with(MacAlgorithm.HS256).build();
@@ -39,8 +42,25 @@ public class JwtService {
 				.claim("roles", roles)
 				.claim("isNonLocked", isNonLocked)
 				.issuedAt(now)
-				.expiresAt(now.plusSeconds(3600 * 24 * 7))
+				.expiresAt(now.plusSeconds(jwtConfig.getAccessTokenExpiration()))
 				.build();
 		return this.jwtEncoder.encode(JwtEncoderParameters.from(header, claims)).getTokenValue();
 	}
+	
+	public String generateRefreshToken(User user) {
+		Instant now = Instant.now();
+		
+		JwsHeader header = JwsHeader.with(MacAlgorithm.HS256).build();
+		
+		String id = user.getId().toString();
+		
+		JwtClaimsSet claims = JwtClaimsSet.builder()
+				.subject(id)
+				.issuedAt(now)
+				.expiresAt(now.plusSeconds(jwtConfig.getRefreshTokenExpiration()))
+				.build();
+		return this.jwtEncoder.encode(JwtEncoderParameters.from(header, claims)).getTokenValue();
+	}
+	
+	
 }

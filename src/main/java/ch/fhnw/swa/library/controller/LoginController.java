@@ -1,7 +1,5 @@
 package ch.fhnw.swa.library.controller;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.fhnw.swa.library.entity.JwtResponse;
+import ch.fhnw.swa.library.entity.LoginResponse;
 import ch.fhnw.swa.library.entity.User;
 import ch.fhnw.swa.library.entity.UserDTO;
 import ch.fhnw.swa.library.repository.UserRepository;
@@ -41,9 +39,10 @@ public class LoginController {
 			
 			User user = userRepository.findByUsername(loginRequest.username());
 			
-			String jwt = jwtService.generateToken(user);
+			String accessToken = jwtService.generateAccessToken(user);
+			String refreshToken = jwtService.generateRefreshToken(user);
 			
-			return ResponseEntity.ok(new JwtResponse(jwt));
+			return ResponseEntity.ok(new LoginResponse(accessToken, refreshToken));
 		} catch (AuthenticationException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
 		}
