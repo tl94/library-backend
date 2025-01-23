@@ -48,4 +48,9 @@ public class LoginController {
 		}
 
 	}
+	
+	@PostMapping("/refresh")
+	public ResponseEntity<?> refresh(@RequestBody String refreshToken) {
+		return null;
+	}
 }
