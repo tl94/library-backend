@@ -25,6 +25,10 @@ logging:
       springframework:
         security:
           DEBUG
+    ch:
+      fhnw:
+        library:
+          DEBUG
    
 jwt:
   secret: your-very-long-secure-key-that-is-at-least-32-characters
