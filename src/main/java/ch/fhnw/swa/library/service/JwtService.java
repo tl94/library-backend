@@ -28,7 +28,7 @@ public class JwtService {
 	public String generateAccessToken(User user) {
 		Instant now = Instant.now();
 		
-		JwsHeader header = JwsHeader.with(MacAlgorithm.HS256).build();
+		JwsHeader header = JwsHeader.with(MacAlgorithm.HS256).type("JWT").build();
 		
 		String id = user.getId().toString();
 		String username = user.getUsername();

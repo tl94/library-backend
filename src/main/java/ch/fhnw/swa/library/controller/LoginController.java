@@ -1,6 +1,9 @@
 package ch.fhnw.swa.library.controller;
 
+import org.springframework.http.HttpCookie;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.fhnw.swa.library.entity.LoginResponse;
 import ch.fhnw.swa.library.entity.User;
 import ch.fhnw.swa.library.entity.UserDTO;
 import ch.fhnw.swa.library.repository.UserRepository;
@@ -42,7 +44,25 @@ public class LoginController {
 			String accessToken = jwtService.generateAccessToken(user);
 			String refreshToken = jwtService.generateRefreshToken(user);
 			
-			return ResponseEntity.ok(new LoginResponse(accessToken, refreshToken));
+			HttpCookie accessTokenCookie = ResponseCookie.from("accessToken", accessToken)
+					.httpOnly(true)
+					.secure(true)
+					.sameSite("Strict")
+					.path("/library/api/")
+					.build();
+			
+			HttpCookie refreshTokenCookie = ResponseCookie.from("refreshToken", refreshToken)
+					.httpOnly(true)
+					.secure(true)
+					.sameSite("Strict")
+					.path("/library/api/auth/refresh")
+					.build();
+			
+			return ResponseEntity.ok()
+					.header(HttpHeaders.SET_COOKIE, accessTokenCookie.toString())
+					.header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
+					.build();
+			
 		} catch (AuthenticationException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
 		}

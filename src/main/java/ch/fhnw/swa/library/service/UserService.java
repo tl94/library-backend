@@ -1,8 +1,14 @@
 package ch.fhnw.swa.library.service;
 
+import java.util.Optional;
+
+import org.bson.types.ObjectId;
+import org.springframework.context.annotation.Bean;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +34,16 @@ public class UserService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException(String.format("User %s not found", username));
 		}
+		return org.springframework.security.core.userdetails.User.withUsername(user.getUsername())
+				.password(user.getPassword()).authorities(user.getAuthorities()).build();
+	}
+	
+	public UserDetails loadUserById(ObjectId userId) throws UsernameNotFoundException {
+		Optional<User> optUser = userRepository.findById(userId);
+		if (optUser.isEmpty()) {
+			throw new UsernameNotFoundException(String.format("User with id %s not found", userId));
+		}
+		User user = optUser.get();
 		return org.springframework.security.core.userdetails.User.withUsername(user.getUsername())
 				.password(user.getPassword()).authorities(user.getAuthorities()).build();
 	}
