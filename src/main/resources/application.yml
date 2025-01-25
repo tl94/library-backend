@@ -35,3 +35,6 @@ jwt:
   expiration: 
     access-token: 3600000
     refresh-token: 604800000
+    
+images:
+  dir: "images/"
