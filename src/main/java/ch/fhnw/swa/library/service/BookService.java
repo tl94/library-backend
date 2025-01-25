@@ -1,11 +1,11 @@
 package ch.fhnw.swa.library.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import ch.fhnw.swa.library.entity.Book;
-import ch.fhnw.swa.library.entity.Image;
 import ch.fhnw.swa.library.repository.BookRepository;
 
 @Service
@@ -41,9 +41,9 @@ public class BookService {
 		return bookRepository.save(book);
 	}
 
-	public Book addBookImage(String bookId, Image image) {
+	public Book addBookImage(String bookId, String imageRef) {
 		Book book = bookRepository.findById(bookId).get();
-		book.addImage(image);
+		book.addImageRef(imageRef);
 		book = bookRepository.save(book);
 		return book;
 	}
@@ -52,6 +52,19 @@ public class BookService {
 	public Book createBook(String title, String author, String isbn) {
 		Book book = new Book(title, author, isbn);
 		return bookRepository.save(book);
+	}
+	
+	public Book updateBook(Book book) {
+		Optional<Book> optOriginal = bookRepository.findById(book.getId());
+		if (optOriginal.isPresent()) {
+			Book original = optOriginal.get();
+			original.setTitle(book.getTitle());
+			original.setAuthor(book.getAuthor());
+			original.setIsbn(book.getIsbn());
+			return bookRepository.save(original);
+		} else {
+			return null;
+		}
 	}
 
 	public Book deleteBook(String id) {
